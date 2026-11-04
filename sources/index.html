@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ammar Bahaa | عمار بهاء</title>
+
+    <meta name="description" content="عمار بهاء - مهندس ذكاء اصطناعي وأنظمة مدمجة، ومؤسس ABM Tech Hub">
+
+    <meta itemprop="name" content="Ammar Bahaa | عمار بهاء">
+    <meta itemprop="description" content="عمار بهاء - مهندس ذكاء اصطناعي وأنظمة مدمجة، ومؤسس ABM Tech Hub">
+    <meta itemprop="image" content="/social/share-image.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Ammar Bahaa | عمار بهاء">
+    <meta name="twitter:description" content="عمار بهاء - مهندس ذكاء اصطناعي وأنظمة مدمجة، ومؤسس ABM Tech Hub">
+    <meta name="twitter:image" content="/social/share-image.png">
+
+    <meta property="og:site_name" content="Ammar Bahaa Portfolio">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ammar-bahaa.netlify.app/">
+    <meta property="og:title" content="Ammar Bahaa | عمار بهاء">
+    <meta property="og:description" content="عمار بهاء - مهندس ذكاء اصطناعي وأنظمة مدمجة، ومؤسس ABM Tech Hub">
+    <meta property="og:image" content="/social/share-image.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Amatic+SC:wght@700&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="./style/index.styl">
+
+    <link rel="icon" type="image/png" href="/favicons/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicons/favicon.svg" loading="lazy" />
+    <link rel="shortcut icon" href="/favicons/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Ammar" />
+    <link rel="manifest" href="/favicons/site.webmanifest" />
+
+    <link rel="preload" href="/respawns/respawnsReferences-compressed.glb" as="fetch" crossorigin>
+    <link rel="preload" href="/behindTheScene/stars.ktx" as="fetch" crossorigin>
+    <link rel="preload" href="/intro/sound.ktx" as="fetch" crossorigin>
+    <link rel="preload" href="/palette.ktx" as="fetch" crossorigin>
+    
+    <!-- Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JMSN30BQ5J"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', '%VITE_ANALYTICS_TAG%');
+    </script>
+</head>
+<body>
+
+    <div class="js-fonts-loader fonts-loader">
+        <div class="font nunito" data-font="400 20px Nunito"> </div>
+        <div class="font amatic-sc" data-font="700 20px 'Amatic SC'"> </div>
+        <div class="font pally" data-font="500 20px Pally-Medium"> </div>
+        <div class="font cairo" data-font="600 20px Cairo"> </div>
+    </div>
+    
+    <div class="game">
+
+        <canvas class="js-canvas"></canvas>
+
+        <!-- Touch buttons -->
+        <div class="js-touch-buttons touch-buttons">
+            <div class="js-overlay overlay"></div>
+            <div class="list">
+                <button data-name="interact" class="js-button interact">Interact</button>
+                <button data-name="unstuck" class="js-button unstuck">Unstuck</button>
+                <button data-name="previous" class="js-button previous"></button>
+                <button data-name="next" class="js-button next"></button>
+                <button data-name="open" class="js-button open"></button>
+                <button data-name="close" class="js-button close"></button>
+            </div>
+        </div>
+
+        <!-- Menu trigger -->
+        <button class="js-menu-trigger menu-trigger">
+            <div class="button-inner">
+                <div class="icon-container">
+                    <div class="icon">
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                    </div>
+                </div>
+            </div>
+        </button>
+
+        <!-- Map trigger -->
+        <button class="js-map-trigger map-trigger">
+            <div class="button-inner">
+                <div class="icon-container">
+                    <img class="map-icon" src="ui/map.svg" loading="lazy">
+                </div>
+            </div>
+        </button>
+
+        <!-- Menu -->
+        <div class="js-menu menu">
+
+            <div class="inner">
+
+                <button class="js-close close">
+                    <div class="button-inner">
+                        <div class="icon-container">
+                            <img class="icon is-default" src="ui/close.svg" loading="lazy">
+                            <span class="icon is-xbox">A</span>
+                        </div>
+                    </div>
+                </button>
+
+                <div class="js-navigation navigation">
+
+                    <!-- Intro -->
+                    <button class="js-navigation-item item" data-name="home">
+                        <div class="button-inner">
+                            <div class="icon-container">
+                                <img src="ui/home.svg" loading="lazy">
+                            </div>
+                        </div>
+                    </button>
+
+                    <!-- Intro -->
+                    <button class="js-navigation-item item" data-name="options">
+                        <div class="button-inner">
+                            <div class="icon-container">
+                                <img src="ui/gear.svg" loading="lazy">
+                            </div>
+                        </div>
+                    </button>
+
+                    <!-- Controls -->
+                    <button class="js-navigation-item item" data-name="controls">
+                        <div class="button-inner">
+                            <div class="icon-container">
+                                <img src="ui/controls/gamepad.svg" loading="lazy">
+                            </div>
+                        </div>
+                    </button>
+
+                    <!-- Achievements -->
+                    <button class="js-navigation-item item" data-name="achievements">
+                        <div class="button-inner">
+                            <div class="icon-container">
+                                <img src="ui/medal.svg" loading="lazy">
+                            </div>
+                        </div>
+                    </button>
+
+                    <!-- Circuit -->
+                    <button class="js-navigation-item item" data-name="circuit">
+                        <div class="button-inner">
+                            <div class="icon-container">
+                                <img src="ui/wheel.svg" loading="lazy">
+                            </div>
+                        </div>
+                    </button>
+
+                    <!-- Projects -->
+                    <button class="js-navigation-item item" data-name="projects">
+                        <div class="button-inner">
+                            <div class="icon-container">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffceca" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                            </div>
+                        </div>
+                    </button>
+
+                    <!-- Behind the scene -->
+                    <button class="js-navigation-item item" data-name="behindTheScene">
+                        <div class="button-inner">
+                            <div class="icon-container">
+                                <img src="ui/question.svg" loading="lazy">
+                            </div>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="container">
+
+                    <div class="previews js-previews">
+
+                        <!-- Intro -->
+                        <div class="js-preview preview home-preview">
+                            <img class="background" src="ui/previews/home.webp" loading="lazy" draggable="false">
+                        </div>
+
+                        <!-- Options -->
+                        <div class="js-preview preview options-preview">
+                            <img class="background" src="ui/previews/options.webp" loading="lazy" draggable="false">
+                        </div>
+
+                        <!-- Controls -->
+                        <div class="js-preview preview controls-preview">
+                            <img class="background" src="ui/previews/controls.webp" loading="lazy" draggable="false">
+                        </div>
+
+                        <!-- Achievements -->
+                        <div class="js-preview preview achievements-preview">
+                            <img class="background" src="ui/previews/achievements.webp" loading="lazy" draggable="false">
+                        </div>
+
+                        <!-- Circuit -->
+                        <div class="js-preview preview circuit-preview">
+                            <img class="background" src="ui/previews/circuit.webp" loading="lazy" draggable="false">
+                        </div>
+
+                        <!-- Projects -->
+                        <div class="js-preview preview projects-preview">
+                            <img class="background" src="ui/previews/home.webp" loading="lazy" draggable="false">
+                        </div>
+
+                        <!-- Behind the scene -->
+                        <div class="js-preview preview behindTheScene-preview">
+                            <img class="background" src="ui/previews/behindTheScene.webp" loading="lazy" draggable="false">
+                        </div>
+
+                    </div>
+
+                    <div class="contents js-contents">
+                        <!-- Intro & About -->
+                        <div class="js-content content home-content" dir="auto">
+                            <div class="content-inner">
+                                <div class="title">عمار بهاء | Ammar Bahaa</div>
+                                
+                                <p class="text arabic-text" style="font-size: 1.15rem; line-height: 1.8; margin-bottom: 0.8rem;">
+                                    أنا <strong>عمار بهاء</strong>، مهندس ذكاء اصطناعي وأنظمة مدمجة، ومؤسس <strong>ABM Tech Hub</strong>. اسوق في العالم ده وتعرّف على شغلي ومشاريعي.
+                                </p>
+                                <p class="text english-text" style="opacity: 0.85; font-size: 0.95rem; line-height: 1.5; margin-bottom: 1.2rem;">
+                                    Welcome! I am <strong>Ammar Bahaa</strong>, AI & Embedded Systems Engineer, AI Product Manager, and Founder of <strong>ABM Tech Hub</strong>. Drive around this interactive 3D world to explore my work.
+                                </p>
+
+                                <h2 class="title" style="margin-top: 1.5rem; font-size: 1.4rem; color: #ffceca;">👨‍💻 من أنا (About Me)</h2>
+                                <p class="text arabic-text" style="line-height: 1.7; margin-bottom: 1rem;">
+                                    مهندس ذكاء اصطناعي وأنظمة مدمجة ومدير منتجات AI (AI Product Manager)، طالب بالسنة النهائية بكلية هندسة النظم الذكية (تخرج 2027)، ومؤسس <strong>ABM Tech Hub</strong> المتخصصة في التكنولوجيا والحلول الهندسية وأنظمة الطاقة: ألواح شمسية، مواتير، حساسات، وبطاريات.
+                                </p>
+
+                                <h2 class="title" style="margin-top: 1.2rem; font-size: 1.4rem; color: #ffceca;">⚡ المهارات والشهادات (Skills & Certifications)</h2>
+                                <ul class="text arabic-text" style="line-height: 1.8; margin-bottom: 1rem; list-style-type: none; padding-right: 0;">
+                                    <li>🔹 <strong>الذكاء الاصطناعي:</strong> AI-assisted development و Prompt Engineering ونماذج Edge AI.</li>
+                                    <li>🔹 <strong>الأنظمة المدمجة:</strong> Embedded Systems (مسار ARM من معهد تكنولوجيا المعلومات ITI صيف 2026) ومتحكمات ESP32 / STM32.</li>
+                                    <li>🔹 <strong>الشبكات والتصميم:</strong> شهادة CCNA، وتصميم ميكانيكي ثلاثي الأبعاد FreeCAD، وطباعة 3D.</li>
+                                    <li>🔹 <strong>حلول الطاقة:</strong> أنظمة الطاقة الشمسية الكهروضوئية، بطاريات القصور الذاتي، وإدارة الطاقة.</li>
+                                    <li>🔹 <strong>إدارة المنتجات:</strong> بناء المنتجات الأولية (MVP)، تحديد وتوثيق المتطلبات، والتوريد وسلاسل الإمداد.</li>
+                                </ul>
+
+                                <h2 class="title" style="margin-top: 1.2rem; font-size: 1.4rem; color: #ffceca;">🎬 صناعة المحتوى (Content Creation)</h2>
+                                <p class="text arabic-text" style="line-height: 1.7; margin-bottom: 1.2rem;">
+                                    مؤسس ومقدم قناة <strong>"الصنايعي الرقمي"</strong> على تيك توك: محتوى تعليمي تقني باللهجة المصرية لتبسيط مفاهيم الذكاء الاصطناعي والهندسة والبرمجة لجيل الشباب.
+                                </p>
+
+                                <div style="margin-top: 1.2rem; display: flex; gap: 10px; flex-wrap: wrap;">
+                                    <button class="button has-text js-contact-trigger" style="background: #e76f51; color: #ffffff; padding: 8px 20px; border-radius: 6px; font-weight: 700; font-family: 'Cairo', sans-serif; cursor: pointer; border: none; font-size: 1rem;">
+                                        💬 تواصل معي | Contact Me
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Options -->
+                        <div class="js-content content options-content">
+                            <div class="content-inner">
+                                <div class="title">Options</div>
+                                <table class="options">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                Audio 
+                                            </td>
+                                            <td>
+                                                <button class="js-audio-toggle audio-toggle button is-small has-tooltip">
+                                                    <div class="tooltip">Toggles sound</div>
+                                                    <img class="icon icon-audio audio-on" src="ui/audio/audioOn.svg" loading="lazy">
+                                                    <img class="icon icon-audio audio-off" src="ui/audio/audioOff.svg" loading="lazy">
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Quality 
+                                            </td>
+                                            <td>
+                                                <button class="js-quality-toggle quality-toggle button is-small has-tooltip">
+                                                    <div class="tooltip">Toggles some effects</div>
+                                                    <span>Low</span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                I'm stuck!
+                                            </td>
+                                            <td>
+                                                <button class="js-respawn button is-small has-tooltip">
+                                                    <div class="tooltip">Teleports you to the closest respawn</div>
+                                                    Respawn
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Reset
+                                            </td>
+                                            <td>
+                                                <button class="js-reset button is-small has-tooltip">
+                                                    <div class="tooltip">Resets every object</div>
+                                                    Reset
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Renderer
+                                            </td>
+                                            <td>
+                                                <button class="js-renderer button is-small is-disabled is-success has-tooltip">
+                                                    <div class="js-tooltip tooltip">Best for performance</div>
+                                                    <span>WebGPU</span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Server
+                                            </td>
+                                            <td>
+                                                <button class="js-server button is-small is-disabled has-tooltip">
+                                                    <div class="js-tooltip tooltip"></div>
+                                                    <span>Pending</span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Controls -->
+                        <div class="js-content content controls-content">
+                            <div class="content-inner">
+                                <div class="js-tabs tabs">
+                                    <div class="js-tabs-navigation tabs-navigation">
+                                        <button class="js-tabs-navigation-item tab" data-tabs-name="mouse-keyboard">
+                                            <div class="active-background"></div>
+                                            <span class="icon-container">
+                                                <span class="icon icon-mouse-keyboard"></span>
+                                            </span>
+                                            <span class="label">Mouse Keyboard</span>
+                                        </button>
+                                        <button class="js-tabs-navigation-item tab" data-tabs-name="touch">
+                                            <div class="active-background"></div>
+                                            <span class="icon-container">
+                                                <span class="icon icon-touch"></span>
+                                            </span>
+                                            <span class="label">Mobile Tablet</span>
+                                        </button>
+                                        <button class="js-tabs-navigation-item tab" data-tabs-name="gamepad">
+                                            <div class="active-background"></div>
+                                            <span class="icon-container">
+                                                <span class="icon icon-gamepad"></span>
+                                            </span>
+                                            <span class="label">Gamepad</span>
+                                        </button>
+                                    </div>
+                                    <div class="js-tabs-content text text-small tabs-content">
+
+                                        <!-- Mouse / Keyboard -->
+                                        <div class="js-tabs-content-item tabs-content-item mouse-keyboard" data-tabs-name="mouse-keyboard" data-tabs-default>
+                                            <div class="js-tabs-content-inner list">
+                                                <table>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><span class="key">WASD</span> or <span class="key">ARROWS</span></td>
+                                                            <td>Move around</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><span class="key">SHIFT</span></td>
+                                                            <td>Boost</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><span class="key">CTRL LEFT</span> or <span class="key">B</span></td>
+                                                            <td>Brake</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><span class="key">SPACE</span></td>
+                                                            <td>Jump</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><span class="key">ENTER</span></td>
+                                                            <td>Interact</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><span class="key">M</span></td>
+                                                            <td>Map</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><span class="key">L</span></td>
+                                                            <td>Mute</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><span class="key">T</span></td>
+                                                            <td>Post a whisper</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><span class="key">R</span></td>
+                                                            <td>Respawn</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><span class="key">NUM KEYS</span>/<span class="key">NUM PAD</span></td>
+                                                            <td>Activate hydraulics</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><span class="key">LEFT CLICK (DRAG)</span></td>
+                                                            <td>Move camera</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><span class="key">H</span></td>
+                                                            <td>Honk</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        <!-- Mobile / Tablet -->
+                                        <div class="js-tabs-content-item tabs-content-item touch" data-tabs-name="touch">
+                                            <div class="js-tabs-content-inner list">
+                                                <table>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><span class="key">One finger</span></td>
+                                                            <td>Move the car</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><span class="key">Two fingers</span></td>
+                                                            <td>Move camera / zoom</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><span class="key">Tap (on the car)</span></td>
+                                                            <td>Jump</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        <!-- Gamepad -->
+                                        <div class="js-tabs-content-item tabs-content-item gamepad" data-tabs-name="gamepad">
+                                            <div class="js-tabs-content-inner list">
+                                            
+                                                <table>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <span class="is-gamepad-button is-xbox key">B</span>
+                                                                <span class="is-gamepad-button is-playstation is-icon circle"></span>
+                                                            </td>
+                                                            <td>Boost</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <span class="is-gamepad-button is-xbox key">Y</span>
+                                                                <span class="is-gamepad-button is-playstation is-icon triangle"></span>
+                                                            </td>
+                                                            <td>Jump</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <span class="is-gamepad-button is-xbox key">X</span>
+                                                                <span class="is-gamepad-button is-playstation is-icon square"></span>
+                                                            </td>
+                                                            <td>Brake</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <span class="is-gamepad-button is-xbox key">A</span>
+                                                                <span class="is-gamepad-button is-playstation is-icon cross"></span>
+                                                            </td>
+                                                            <td>Interact / Exit</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <span class="is-gamepad-button is-xbox key">LT</span>
+                                                                <span class="is-gamepad-button is-playstation key">L2</span>
+                                                            </td>
+                                                            <td>Accelerate</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <span class="is-gamepad-button is-xbox key">RT</span>
+                                                                <span class="is-gamepad-button is-playstation key">R2</span>
+                                                            </td>
+                                                            <td>Backward accelerate</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <span class="is-gamepad-button is-xbox key">LB / RB</span>
+                                                                <span class="is-gamepad-button is-playstation key">L1 / R1</span>
+                                                            </td>
+                                                            <td>Hydraulics</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><span class="key">Joystick Left</span></td>
+                                                            <td>Turn wheels</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><span class="key">Joystick Left (press)</span></td>
+                                                            <td>Honk</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><span class="key">Joystick Right</span></td>
+                                                            <td>Move camera</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><span class="key">Joystick Right (press)</span></td>
+                                                            <td>Zoom in/out</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><span class="key">Select</span></td>
+                                                            <td>Reset</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><span class="key">Start</span></td>
+                                                            <td>Pause</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Achievements -->
+                        <div class="js-content content achievements-content">
+                            <div class="content-inner">
+                                <div class="title">Achievements</div>
+                                <div class="js-global-progress global-progress">
+                                    <span class="ratio"><span class="js-current current"></span> / <span class="js-total total"></span></span>
+                                    <span class="js-time time">2h 30min 15s</span>
+                                </div>
+                                <div class="rewards-container">
+                                    <div class="title">Rewards</div>
+                                    <div class="rewards">
+                                        <button class="js-reward reward has-tooltip" data-name="red" data-default>
+                                            <div class="js-tooltip tooltip">Unlock at <strong></strong></div>
+                                            <img class="picture" src="ui/achievements/rewards/red.webp" loading="lazy">
+                                            <div class="lock">
+                                                <img class="lock-icon" src="ui/lock.svg" loading="lazy">
+                                            </div>
+                                        </button>
+                                        <button class="js-reward reward has-tooltip is-locked" data-name="orange">
+                                            <div class="js-tooltip tooltip">Unlock at <strong></strong></div>
+                                            <img class="picture" src="ui/achievements/rewards/orange.webp" loading="lazy">
+                                            <div class="lock">
+                                                <img class="lock-icon" src="ui/lock.svg" loading="lazy">
+                                            </div>
+                                        </button>
+                                        <button class="js-reward reward has-tooltip is-locked" data-name="white">
+                                            <div class="js-tooltip tooltip">Unlock at <strong></strong></div>
+                                            <img class="picture" src="ui/achievements/rewards/white.webp" loading="lazy">
+                                            <div class="lock">
+                                                <img class="lock-icon" src="ui/lock.svg" loading="lazy">
+                                            </div>
+                                        </button>
+                                        <button class="js-reward reward has-tooltip is-locked" data-name="black">
+                                            <div class="js-tooltip tooltip">Unlock at <strong></strong></div>
+                                            <img class="picture" src="ui/achievements/rewards/black.webp" loading="lazy">
+                                            <div class="lock">
+                                                <img class="lock-icon" src="ui/lock.svg" loading="lazy">
+                                            </div>
+                                        </button>
+                                        <button class="js-reward reward has-tooltip is-locked" data-name="flames">
+                                            <div class="js-tooltip tooltip">Unlock at <strong></strong></div>
+                                            <img class="picture" src="ui/achievements/rewards/flames.webp" loading="lazy">
+                                            <div class="lock">
+                                                <img class="lock-icon" src="ui/lock.svg" loading="lazy">
+                                            </div>
+                                        </button>
+                                        <button class="js-reward reward has-tooltip is-locked" data-name="abyssal">
+                                            <div class="js-tooltip tooltip">Unlock at <strong></strong></div>
+                                            <img class="picture" src="ui/achievements/rewards/abyssal.webp" loading="lazy">
+                                            <div class="lock">
+                                                <img class="lock-icon" src="ui/lock.svg" loading="lazy">
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="js-items items"></div>
+
+                                <div class="horizontal-group">
+                                
+                                    <button class="js-button-reset button button-reset">
+                                        Reset achievements
+                                    </button>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Circuit -->
+                        <div class="js-content content circuit-content" dir="auto">
+                            <div class="content-inner">
+                                <div class="title">سباق الحلبة | Circuit</div>
+                                
+                                <div class="local-circuit-info" style="margin: 1rem 0; font-family: 'Cairo', sans-serif;">
+                                    <p class="text arabic-text" style="font-size: 1.05rem; line-height: 1.6; color: #ffceca; margin-bottom: 0.8rem;">
+                                        تحدي سباق الحلبة (Time Trial):
+                                        <br />قد السيارة في مسار الحلبة وسجّل أسرع توقيت للفة. يتم حفظ أفضل زمن محليًا في متصفحك.
+                                    </p>
+                                    <div style="background: rgba(255,255,255,0.06); padding: 12px 16px; border-radius: 8px; border: 1px solid rgba(255,206,202,0.3); font-size: 1rem;">
+                                        🏁 أفضل توقيت محلي: <span class="js-circuit-local-best" style="font-weight: 700; color: #ffffff; direction: ltr; display: inline-block;">00:00:000</span>
+                                    </div>
+                                </div>
+
+                                <div class="js-racing-buttons racing-buttons horizontal-group">
+                                
+                                    <button class="js-button-restart button">
+                                        <svg class="icon icon-restart" width="20" height="24" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M17 5L10 10V6C5.58172 6 2 9.58172 2 14C2 18.4183 5.58172 22 10 22C14.4183 22 18 18.4183 18 14H20C20 19.5228 15.5228 24 10 24C4.47715 24 0 19.5228 0 14C0 8.47715 4.47715 4 10 4V0L17 5Z" fill="#ffffff"/>
+                                        </svg>
+                                        Restart / ابدأ السباق
+                                    </button>
+                                </div>
+                                
+                                    <button class="js-button-end button">
+                                        <svg class="icon icon-flag" class="none" width="23" height="20" viewBox="0 0 23 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M0.551758 1.7258C6.55166 -2.27398 11.0001 3.40978 19 1.40953L23 13.4096C15.5952 15.2611 11.6175 10.2589 6.30859 12.6762L8.44824 19.0941L6.55176 19.7269L0.551758 1.7258ZM5.26562 2.00328C4.68209 2.01685 4.07959 2.11674 3.42871 2.37242L6.16309 10.5746C7.17704 10.2014 8.1765 10.0274 9.17188 10.0043C10.8337 9.96566 12.395 10.3531 13.7764 10.7299C15.9783 11.3304 17.9741 11.9562 20.3564 11.806L17.6533 3.69664C13.9491 4.17921 11.0237 3.21654 8.72363 2.58922C7.3553 2.21603 6.29108 1.97952 5.26562 2.00328Z" fill="#ffffff"/>
+                                        </svg>
+                                        End
+                                    </button>
+                                
+                                    <button class="js-button-controls button">
+                                        <svg class="icon icon-controller" width="34" height="22" viewBox="0 0 34 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M24.9901 0C27.2187 0 29.1912 1.98468 30.0877 3.96582C30.9844 5.94795 33.3919 15.0915 33.9373 17.4551C34.4824 19.8185 30.7556 22.1815 26.5741 22.1816C24.3923 19.6363 22.2847 16.7432 19.8465 15H14.2235C11.7707 16.7432 9.6507 19.6363 7.4559 22.1816C3.24927 22.1816 -0.494655 19.8185 0.053558 17.4551C0.602246 15.0917 3.02451 5.94816 3.9266 3.96582C4.82847 1.98469 6.81257 0.000114396 9.05453 0H24.9901ZM8.85532 2.01074C8.38039 2.06286 7.8363 2.30078 7.27133 2.77344C6.62835 3.31144 6.08313 4.05636 5.74692 4.79492C5.3762 5.61 4.5895 8.20768 3.78403 11.1035C3.19639 13.2162 2.63705 15.345 2.28207 16.7588L2.0018 17.9072C1.9553 18.1081 1.96994 18.5603 2.69711 19.124C3.29365 19.5864 5.2646 20.0018 6.56332 20.1357C6.88401 19.7496 7.20912 19.3522 7.54086 18.9434C8.08227 18.2761 8.64694 17.5798 9.22153 16.9062C10.36 15.5716 11.6783 14.3885 13.1112 13.3701L13.6307 13H20.534L21.0555 13.373C22.4808 14.3921 23.7002 15.5757 24.8319 16.9102C25.4031 17.5837 25.9636 18.2811 26.5018 18.9482C26.83 19.3551 27.1523 19.7504 27.4696 20.1348C28.7512 20 30.7095 19.5872 31.2987 19.1279C32.0175 18.5673 32.0359 18.1133 31.9881 17.9053L31.7098 16.7559C31.3569 15.3419 30.8007 13.2132 30.2166 11.1006C29.4159 8.20421 28.6341 5.60492 28.2655 4.79004C27.9309 4.05089 27.3888 3.30754 26.7508 2.77051C26.1096 2.23085 25.4989 2 24.9901 2H9.05453L8.85532 2.01074ZM12.0096 7H14.0096V9H12.0096V11H10.0096V9H8.00961V7H10.0096V5H12.0096V7ZM24.0096 11H22.0096V9H24.0096V11ZM22.0096 9H20.0096V7H22.0096V9ZM26.0096 9H24.0096V7H26.0096V9ZM24.0096 7H22.0096V5H24.0096V7Z" fill="#ffffff"/>
+                                        </svg>
+                                        Controls
+                                    </button>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Whispers -->
+                        <div class="js-content content projects-content" dir="auto">
+                            <div class="content-inner">
+                                <div class="title">مشاريعي | Projects</div>
+                                <p class="text arabic-text" style="font-size: 1rem; color: #ffceca; margin-bottom: 0.5rem;">
+                                    مجموعة مختارة من مشروعاتي في الذكاء الاصطناعي، الأنظمة المدمجة، وحلول الطاقة والميكاترونكس:
+                                </p>
+                                
+                                <div class="projects-list">
+                                    <!-- 1 -->
+                                    <div class="project-card">
+                                        <div class="card-header">
+                                            <div class="project-title">1. رادار RF مع نموذج AI للتتبع</div>
+                                            <span class="project-badge">Edge AI & RF</span>
+                                        </div>
+                                        <p class="project-desc">رادار ترددات راديوية (RF) مصمم ومبني من الصفر مع نموذج AI خفيف للتتبع يعمل مباشرة على متحكم صغير بدقة عالية وتكلفة منخفضة.</p>
+                                        <div class="project-tags">
+                                            <span class="tag">RF Radar</span>
+                                            <span class="tag">Edge AI</span>
+                                            <span class="tag">Embedded Systems</span>
+                                            <span class="tag">DSP</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- 2 -->
+                                    <div class="project-card">
+                                        <div class="card-header">
+                                            <div class="project-title">2. منصة ألعاب تدريب ذهني للأطفال</div>
+                                            <span class="project-badge">ESP32-S3</span>
+                                        </div>
+                                        <p class="project-desc">منصة ألعاب إلكترونية تفاعلية مدمجة مبنية على ESP32-S3 موجهة لتطوير المهارات الذهنية وسرعة البديهة والتركيز لدى الأطفال بطرق ممتعة.</p>
+                                        <div class="project-tags">
+                                            <span class="tag">ESP32-S3</span>
+                                            <span class="tag">Embedded C++</span>
+                                            <span class="tag">EdTech</span>
+                                            <span class="tag">Hardware</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- 3 -->
+                                    <div class="project-card">
+                                        <div class="card-header">
+                                            <div class="project-title">3. Motor Lab: معمل مواتير 3D تفاعلي</div>
+                                            <span class="project-badge">WebGL / 3D</span>
+                                        </div>
+                                        <p class="project-desc">معمل ثلاثي الأبعاد تفاعلي كامل لشرح وتشريح أنواع المواتير الكهربائية المختلفة (DC, BLDC, Stepper, Induction) ومحاكاة حركتها ونظرياتها.</p>
+                                        <div class="project-tags">
+                                            <span class="tag">Three.js</span>
+                                            <span class="tag">3D Simulation</span>
+                                            <span class="tag">Electric Machines</span>
+                                            <span class="tag">Interactive</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- 4 -->
+                                    <div class="project-card">
+                                        <div class="card-header">
+                                            <div class="project-title">4. CodeVerse (كودڤيرس)</div>
+                                            <span class="project-badge">FullStack EdTech</span>
+                                        </div>
+                                        <p class="project-desc">منصة عربية تفاعلية حديثة لتعليم وتطبيق مهارات تطوير الويب والبرمجة من خلال تمارين حية ومحرر كود تفاعلي وتوجيه عملي مباشر.</p>
+                                        <div class="project-tags">
+                                            <span class="tag">FullStack Web</span>
+                                            <span class="tag">Education</span>
+                                            <span class="tag">JavaScript</span>
+                                            <span class="tag">Community</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- 5 -->
+                                    <div class="project-card">
+                                        <div class="card-header">
+                                            <div class="project-title">5. حاوية بطارية القصور الذاتي (Flywheel)</div>
+                                            <span class="project-badge">Energy Storage</span>
+                                        </div>
+                                        <p class="project-desc">تصميم نظام تخزين طاقة حركي يعتمد على حذافة ميكانيكية متطورة لتنظيم تردد الشبكة الكهربائية واستيعاب تقلبات الأحمال والطاقة المتجددة.</p>
+                                        <div class="project-tags">
+                                            <span class="tag">Flywheel</span>
+                                            <span class="tag">Grid Regulation</span>
+                                            <span class="tag">Clean Energy</span>
+                                            <span class="tag">Control Systems</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- 6 -->
+                                    <div class="project-card">
+                                        <div class="card-header">
+                                            <div class="project-title">6. عربية جولف: تصميم شاسيه</div>
+                                            <span class="project-badge">Mechanical & CAD</span>
+                                        </div>
+                                        <p class="project-desc">تصميم هندسي متكامل واختبار إجهادات ميكانيكية لشاسيه عربة كهربائية جولف مخصصة للمنتجعات والملاعب توازن بين الوزن والمتانة.</p>
+                                        <div class="project-tags">
+                                            <span class="tag">FreeCAD</span>
+                                            <span class="tag">Chassis FEA</span>
+                                            <span class="tag">Mechanical CAD</span>
+                                            <span class="tag">EV</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- 7 -->
+                                    <div class="project-card">
+                                        <div class="card-header">
+                                            <div class="project-title">7. طابعة A4 منخفضة التكلفة (مسابقة 2026)</div>
+                                            <span class="project-badge">Team Leadership</span>
+                                        </div>
+                                        <p class="project-desc">قيادة فريق هندسي لتصميم وتصنيع طابعة حبر سائل A4 فائقة السرعة واقتصادية الاستهلاك بأقل تكلفة ممكنة لكسر احتكار الأسعار التجارية.</p>
+                                        <div class="project-tags">
+                                            <span class="tag">Mechatronics</span>
+                                            <span class="tag">Leadership</span>
+                                            <span class="tag">Embedded Firmware</span>
+                                            <span class="tag">Product Design</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- 8 -->
+                                    <div class="project-card">
+                                        <div class="card-header">
+                                            <div class="project-title">8. منصة تفسير بيانات الآبار (LAS) بأفق سيبراني</div>
+                                            <span class="project-badge">Graduation Project</span>
+                                        </div>
+                                        <p class="project-desc">مشروع التخرج (قيد التنفيذ): منصة تعليمية وتحليلية لتفسير بيانات الآبار البترولية (Well Log / LAS) محصنة بأحدث بروتوكولات الأمن السيبراني.</p>
+                                        <div class="project-tags">
+                                            <span class="tag">AI Analytics</span>
+                                            <span class="tag">Cybersecurity</span>
+                                            <span class="tag">Petroleum Data</span>
+                                            <span class="tag">LAS Format</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- 9 -->
+                                    <div class="project-card">
+                                        <div class="card-header">
+                                            <div class="project-title">9. لوح شحن لاسلكي للسيارات الكهربائية</div>
+                                            <span class="project-badge">Product Concept</span>
+                                        </div>
+                                        <p class="project-desc">تصور منتج لوح شحن لاسلكي حثي للسيارات الكهربائية يجمع بين مرسل أرضي وجهاز استقبال اقتصادي مع استهداف كفاءة 50%+ شحن في 15 دقيقة.</p>
+                                        <div class="project-tags">
+                                            <span class="tag">Wireless Charging</span>
+                                            <span class="tag">EV Infrastructure</span>
+                                            <span class="tag">Power Electronics</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- 10 -->
+                                    <div class="project-card">
+                                        <div class="card-header">
+                                            <div class="project-title">10. مكبس علب ألومنيوم نصف أوتوماتيك</div>
+                                            <span class="project-badge">FreeCAD 3D</span>
+                                        </div>
+                                        <p class="project-desc">تصميم هندسي متكامل في FreeCAD لمكبس نصف أوتوماتيكي لإنتاج بالات علب ألومنيوم مضغوطة 25-30 كجم لقطاع مصاهر المعادن وإعادة التدوير.</p>
+                                        <div class="project-tags">
+                                            <span class="tag">FreeCAD</span>
+                                            <span class="tag">Hydraulics</span>
+                                            <span class="tag">Industrial Automation</span>
+                                            <span class="tag">Recycling</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            </div>
+                        </div>
+
+                        <!-- Credits (formerly Behind the scene) -->
+                        <div class="js-content content behindTheScene-content" dir="auto">
+                            <div class="content-inner">
+                                <div class="title">Credits & Acknowledgements</div>
+                                <p class="text arabic-text" style="font-size: 1.05rem; line-height: 1.7; margin-bottom: 0.8rem;">
+                                    هذا البورتفوليو مبني على المشروع مفتوح المصدر الرائع <a href="https://github.com/brunosimon/folio-2025" target="_blank" rel="noreferrer">folio-2025</a> للمبدع <strong>Bruno Simon</strong> بترخيص <strong>MIT License</strong>.
+                                </p>
+                                <p class="text english-text" style="font-size: 0.95rem; line-height: 1.5; margin-bottom: 1rem;">
+                                    This 3D interactive portfolio is proudly built upon the open-source project <a href="https://github.com/brunosimon/folio-2025" target="_blank" rel="noreferrer">folio-2025</a> created by <strong>Bruno Simon</strong>, released under the <a href="https://choosealicense.com/licenses/mit/" target="_blank" rel="noreferrer">MIT License</a>.
+                                </p>
+                                
+                                <h2 class="title">MIT License & Original Repo</h2>
+                                <p class="text">
+                                    The base source code, 3D world architecture, and shaders are copyright &copy; 2025 Bruno Simon.
+                                    <br />The original repository and assets can be explored on <a href="https://github.com/brunosimon/folio-2025" target="_blank" rel="noreferrer">GitHub (brunosimon/folio-2025)</a>.
+                                </p>
+                                
+                                <h2 class="title">Music & Audio</h2>
+                                <p class="text">
+                                    Soundtracks by Kounine (<a href="https://linktr.ee/Kounine" target="_blank" rel="noreferrer">Linktree</a>) licensed under <a href="https://choosealicense.com/licenses/cc0-1.0/" target="_blank" rel="noreferrer">CC0 1.0 Universal</a>.
+                                </p>
+
+                                <h2 class="title">Core Technologies</h2>
+                                <ul class="text">
+                                    <li>3D Engine ⇒ <a href="https://threejs.org" target="_blank" rel="noreferrer">Three.js</a> (TSL, WebGPU & WebGL)</li>
+                                    <li>Physics Simulation ⇒ <a href="https://rapier.rs" target="_blank" rel="noreferrer">Rapier 3D</a></li>
+                                    <li>Audio Engine ⇒ <a href="https://howlerjs.com" target="_blank" rel="noreferrer">Howler.js</a></li>
+                                    <li>Fonts ⇒ <a href="https://fonts.google.com/specimen/Cairo" target="_blank" rel="noreferrer">Cairo</a> & <a href="https://fonts.google.com/specimen/Nunito" target="_blank" rel="noreferrer">Nunito</a></li>
+                                </ul>
+
+                                <p class="text text-faded text-align-right">
+                                    — Ammar Bahaa
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Modals -->
+        <div class="js-modals modals">
+
+            <!-- Circuit end -->
+            <div class="js-modal modal circuit-end" data-name="circuit-end">
+                <div class="container">
+                    <div class="content">
+                        <button class="js-close close">
+                            <img class="icon is-default" src="ui/close.svg" loading="lazy">
+                            <span class="icon is-xbox">A</span>
+                        </button>
+
+                        <div class="your-time">
+                            Your time
+                            <br /><span class="js-time value">00:00:000</span>
+                        </div>
+
+                        <div class="js-best-time-container" style="margin: 0.8rem 0; font-size: 1.05rem; color: #ffceca; font-family: 'Cairo', sans-serif;">
+                            أفضل توقيت شخصي: <span class="js-best-time" style="font-weight: 700; color: #ffffff; direction: ltr; display: inline-block;">00:00:000</span>
+                        </div>
+
+                        <div class="horizontal-group" style="justify-content: center; margin-top: 1.2rem;">
+                            <button class="js-button-restart button">
+                                <svg class="icon icon-restart" width="20" height="24" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M17 5L10 10V6C5.58172 6 2 9.58172 2 14C2 18.4183 5.58172 22 10 22C14.4183 22 18 18.4183 18 14H20C20 19.5228 15.5228 24 10 24C4.47715 24 0 19.5228 0 14C0 8.47715 4.47715 4 10 4V0L17 5Z" fill="#ffffff"/>
+                                </svg>
+                                Restart
+                            </button>
+                        </div>
+                                    <path d="M17 5L10 10V6C5.58172 6 2 9.58172 2 14C2 18.4183 5.58172 22 10 22C14.4183 22 18 18.4183 18 14H20C20 19.5228 15.5228 24 10 24C4.47715 24 0 19.5228 0 14C0 8.47715 4.47715 4 10 4V0L17 5Z" fill="#ffffff"/>
+                                </svg>
+                                Restart
+                            </button>
+
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact -->
+            <div class="js-modal modal contact" data-name="contact">
+                <div class="container">
+                    <div class="content" dir="auto">
+                        <button class="js-close close">
+                            <img class="icon is-default" src="ui/close.svg" loading="lazy">
+                            <span class="icon is-xbox">A</span>
+                        </button>
+
+                        <div class="title">تواصل معي | Get in Touch</div>
+
+                        <div class="contact-grid">
+                            <!-- Phone & WhatsApp -->
+                            <div class="contact-card">
+                                <div class="card-title">📱 الهاتف وواتساب</div>
+                                <div class="card-value">+20 101 843 3984</div>
+                                <div class="btn-row">
+                                    <a href="tel:+201018433984" class="btn-action">📞 اتصال</a>
+                                    <a href="https://wa.me/201018433984" target="_blank" rel="noreferrer" class="btn-action">💬 واتساب</a>
+                                    <button class="btn-action js-copy-btn" data-copy="+201018433984">📋 نسخ</button>
+                                </div>
+                            </div>
+
+                            <!-- Gmail -->
+                            <div class="contact-card">
+                                <div class="card-title">✉️ البريد الإلكتروني</div>
+                                <div class="card-value">ammarbahaa2163702@gmail.com</div>
+                                <div class="btn-row">
+                                    <a href="mailto:ammarbahaa2163702@gmail.com" class="btn-action">📧 إرسال إيميل</a>
+                                    <button class="btn-action js-copy-btn" data-copy="ammarbahaa2163702@gmail.com">📋 نسخ</button>
+                                </div>
+                            </div>
+
+                            <!-- LinkedIn -->
+                            <div class="contact-card">
+                                <div class="card-title">💼 LinkedIn</div>
+                                <div class="card-value">linkedin.com/in/ammar-bahaa</div>
+                                <div class="btn-row">
+                                    <a href="https://www.linkedin.com/in/ammar-bahaa" target="_blank" rel="noreferrer" class="btn-action">🔗 زيارة الملف</a>
+                                </div>
+                            </div>
+
+                            <!-- Content / TikTok -->
+                            <div class="contact-card">
+                                <div class="card-title">🎥 المحتوى الرقمي</div>
+                                <div class="card-value">الصنايعي الرقمي (TikTok)</div>
+                                <div class="btn-row">
+                                    <a href="https://www.tiktok.com" target="_blank" rel="noreferrer" class="btn-action">🎬 متابعة القناة</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Map -->
+            <div class="js-modal modal map" data-name="map">
+
+                <button class="js-close close">
+                    <div class="button-inner">
+                        <div class="icon-container">
+                            <img class="icon is-default" src="ui/close.svg" loading="lazy">
+                            <span class="icon is-xbox">A</span>
+                        </div>
+                    </div>
+                </button>
+
+                <div class="js-map-container map-container">
+                    <img class="js-texture texture" loading="lazy">
+                    <div class="js-player player"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Notifications -->
+        <div class="js-notifications notifications">
+            <div class="js-items items"></div>
+        </div>
+
+    </div>
+
+    <script type="module" src="./index.js"></script>
+</body>
+</html>
