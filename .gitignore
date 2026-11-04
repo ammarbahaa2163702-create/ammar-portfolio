@@ -8,3 +8,6 @@ dist
 resources/
 static/sounds/musics/*.wav
 *.wav
+
+# Local Netlify folder
+.netlify
