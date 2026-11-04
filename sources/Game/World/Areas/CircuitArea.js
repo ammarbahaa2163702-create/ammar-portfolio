@@ -1284,92 +1284,97 @@ export class CircuitArea extends Area
         })
 
         this.menu.inputGroup = this.endModal.instance.element.querySelector('.js-input-group')
-        this.menu.input = this.menu.inputGroup.querySelector('.js-input')
-
-        const sanatize = (text = '', trim = false, limit = false, stripNonLetter = false, toUpper = false) =>
+        if(this.menu.inputGroup)
         {
-            let sanatized = text
-            if(trim)
-                sanatized = sanatized.trim()
+            this.menu.input = this.menu.inputGroup.querySelector('.js-input')
 
-            if(stripNonLetter)
-                sanatized = sanatized.replace(/[^a-z]/gi, '')
-            
-            if(limit)
-                sanatized = sanatized.substring(0, 3)
-
-            if(toUpper)
-                sanatized = sanatized.toUpperCase()
-
-            return sanatized
-        }
-
-        const submit = () =>
-        {
-            const sanatized = sanatize(this.menu.input.value, true, true, true, true)
-            
-            if(sanatized.length === 3 && this.game.server.connected)
+            const sanatize = (text = '', trim = false, limit = false, stripNonLetter = false, toUpper = false) =>
             {
-                // Insert
-                this.game.server.send({
-                    type: 'circuitInsert',
-                    countryCode: this.menu.inputFlag.country ? this.menu.inputFlag.country.code : '',
-                    tag: sanatized,
-                    duration: Math.round(this.timer.elapsedTime * 1000),
-                    checkpointTimings: this.checkpoints.timings
-                })
+                let sanatized = text
+                if(trim)
+                    sanatized = sanatized.trim()
 
-                // Achievement
-                this.game.achievements.setProgress('circuitLeaderboard', 1)
+                if(stripNonLetter)
+                    sanatized = sanatized.replace(/[^a-z]/gi, '')
+                
+                if(limit)
+                    sanatized = sanatized.substring(0, 3)
 
-                // Close modal
-                this.game.modals.close()
+                if(toUpper)
+                    sanatized = sanatized.toUpperCase()
+
+                return sanatized
             }
+
+            const submit = () =>
+            {
+                const sanatized = sanatize(this.menu.input.value, true, true, true, true)
+                
+                if(sanatized.length === 3 && this.game.server.connected)
+                {
+                    // Insert
+                    this.game.server.send({
+                        type: 'circuitInsert',
+                        countryCode: this.menu.inputFlag.country ? this.menu.inputFlag.country.code : '',
+                        tag: sanatized,
+                        duration: Math.round(this.timer.elapsedTime * 1000),
+                        checkpointTimings: this.checkpoints.timings
+                    })
+
+                    // Achievement
+                    this.game.achievements.setProgress('circuitLeaderboard', 1)
+
+                    // Close modal
+                    this.game.modals.close()
+                }
+            }
+
+            const updateGroup = () =>
+            {
+                if(this.menu.input.value.length === 3 && this.game.server.connected)
+                    this.menu.inputGroup.classList.add('is-valide')
+                else
+                    this.menu.inputGroup.classList.remove('is-valide')
+            }
+
+            this.menu.input.addEventListener('input', () =>
+            {
+                const sanatized = sanatize(this.menu.input.value, false, true, true, true)
+                this.menu.input.value = sanatized
+                updateGroup()
+            })
+
+            this.menu.inputGroup.addEventListener('submit', (event) =>
+            {
+                event.preventDefault()
+
+                submit()
+            })
+
+            this.menu.instance.events.on('closed', () =>
+            {
+                this.menu.input.value = ''
+                updateGroup()
+                this.menu.inputFlag.close()
+            })
+                
+            this.game.server.events.on('connected', () =>
+            {
+                updateGroup()
+            })
+
+            this.game.server.events.on('disconnected', () =>
+            {
+                updateGroup()
+            })
+
+            /**
+             * Flag
+             */
+            const flagElement = this.menu.inputGroup.querySelector('.js-input-flag')
+            if(flagElement)
+                this.menu.inputFlag = new InputFlag(flagElement)
         }
-
-        const updateGroup = () =>
-        {
-            if(this.menu.input.value.length === 3 && this.game.server.connected)
-                this.menu.inputGroup.classList.add('is-valide')
-            else
-                this.menu.inputGroup.classList.remove('is-valide')
-        }
-
-        this.menu.input.addEventListener('input', () =>
-        {
-            const sanatized = sanatize(this.menu.input.value, false, true, true, true)
-            this.menu.input.value = sanatized
-            updateGroup()
-        })
-
-        this.menu.inputGroup.addEventListener('submit', (event) =>
-        {
-            event.preventDefault()
-
-            submit()
-        })
-
-        this.menu.instance.events.on('closed', () =>
-        {
-            this.menu.input.value = ''
-            updateGroup()
-            this.menu.inputFlag.close()
-        })
-            
-        this.game.server.events.on('connected', () =>
-        {
-            updateGroup()
-        })
-
-        this.game.server.events.on('disconnected', () =>
-        {
-            updateGroup()
-        })
-
-        /**
-         * Flag
-         */
-        this.menu.inputFlag = new InputFlag(this.menu.inputGroup.querySelector('.js-input-flag'))
     }
 
     restart()
